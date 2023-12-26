@@ -7,8 +7,9 @@
     <style>
         body {
             font-family: 'Courier New', monospace;
-            background-color: #1e1e1e;
-            color: #00ff00;
+            background-color: #1E1E1E;
+            color: #00FF00;
+            text-align: center;
             margin: 0;
             display: flex;
             align-items: center;
@@ -17,20 +18,49 @@
         }
 
         #terminal {
-            border: 2px solid #00ff00;
+            border: 2px solid #00FF00;
             padding: 20px;
-            width: 400px;
-            min-height: 200px;
-            border-radius: 5px;
-            background-color: #1e1e1e;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
         }
     </style>
 </head>
 <body>
     <div id="terminal">
-        <p>Bem-vindo ao meu site!</p>
-        <p>Digite 'help' para obter ajuda.</p>
+        <p>Bem-vindo ao Terminal de Boas-vindas!</p>
+        <p>Digite <span style="color: #00FFFF;">help</span> para obter ajuda.</p>
+        <br>
+        <div id="output"></div>
+        <br>
+        <input type="text" id="input" placeholder="Digite algo..." onkeydown="handleKeyPress(event)">
     </div>
+
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                processInput();
+            }
+        }
+
+        function processInput() {
+            var inputElement = document.getElementById("input");
+            var outputElement = document.getElementById("output");
+            var inputValue = inputElement.value;
+
+            // Limpar o campo de entrada
+            inputElement.value = "";
+
+            // Adicionar o texto digitado ao terminal
+            outputElement.innerHTML += "<p>> " + inputValue + "</p>";
+
+            // Lógica para processar o comando (pode adicionar mais lógica conforme necessário)
+            if (inputValue.toLowerCase() === "help") {
+                outputElement.innerHTML += "<p>Ajuda: Esta é uma mensagem de ajuda fictícia.</p>";
+            } else {
+                outputElement.innerHTML += "<p>Comando desconhecido. Digite 'help' para obter ajuda.</p>";
+            }
+        }
+    </script>
 </body>
 </html>
