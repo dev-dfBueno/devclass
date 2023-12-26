@@ -8,10 +8,9 @@
         body, html {
             height: 100%;
             margin: 0;
-            padding: 0;
-            font-family: 'Consolas', 'Courier New', monospace;
-            background-color: #282c34;
-            color: #9DA5B4;
+            font-family: 'Lucida Console', Monaco, monospace;
+            background-color: #0d1117;
+            color: #58a6ff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -19,76 +18,62 @@
         }
 
         .terminal {
-            background-color: #21252b;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            padding: 40px;
-            width: 100%;
+            background-color: #161b22;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            width: 90%;
             max-width: 800px;
-            margin: 30px;
         }
 
-        .typed-text {
+        .terminal-header {
+            color: #c9d1d9;
+            margin-bottom: 20px;
+        }
+
+        .terminal-header span {
+            color: #8b949e;
+        }
+
+        .welcome-message {
             font-size: 1.2em;
-            white-space: pre;
-            overflow: hidden;
-            display: inline-block;
+            margin-bottom: 20px;
         }
 
-        @media (max-width: 600px) {
-            .terminal {
-                padding: 20px;
-            }
-            .typed-text {
-                font-size: 1em;
-            }
+        .open-app-button {
+            background-color: #58a6ff;
+            color: #161b22;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .open-app-button:hover {
+            background-color: #4a94e8;
         }
     </style>
 </head>
 <body>
     <div class="terminal">
-        <div class="typed-text"></div>
-        <div class="cursor" style="display: inline-block; width: 10px; background-color: #9DA5B4;"></div>
+        <div class="terminal-header">
+            <h1>DevClass</h1>
+            <span>Terminal de Boas-vindas</span>
+        </div>
+        <div class="welcome-message">
+            Olá, Bem-Vindo ao DevClass!
+            <span style="color: #8b949e;"><br><br>Devclass é um App que auxilia no aprendizado. Voltado para a área de desenvolvimento web e pensado nos iniciantes da área.</span>
+        </div>
+        <button class="open-app-button" onclick="abrirApp()">Abrir App</button>
     </div>
 
     <script>
-        const messages = [
-            "Bem-vindo ao DevClass...",
-            "A plataforma perfeita para desenvolvedores...",
-            "Carregando módulos de aprendizado...",
-            "Preparando ambiente de desenvolvimento...",
-            "Pronto para começar!"
-        ];
-        let currentMessage = 0;
-        let currentChar = 0;
-        const typingDelay = 100;
-        const nextMessageDelay = 1000;
-        const typedTextSpan = document.querySelector(".typed-text");
-        const cursorSpan = document.querySelector(".cursor");
-
-        function type() {
-            if (currentChar < messages[currentMessage].length) {
-                typedTextSpan.textContent += messages[currentMessage].charAt(currentChar);
-                currentChar++;
-                setTimeout(type, typingDelay);
-            } else {
-                // Após terminar a frase, espera um pouco e começa a próxima mensagem
-                setTimeout(() => {
-                    currentMessage++;
-                    if (currentMessage < messages.length) {
-                        currentChar = 0;
-                        typedTextSpan.textContent = '';
-                        type();
-                    } else {
-                        // Remove o cursor ao final
-                        cursorSpan.style.display = 'none';
-                    }
-                }, nextMessageDelay);
-            }
+        function abrirApp() {
+            window.location.href = 'devclass://';
         }
-
-        // Inicia o processo de digitação
-        type();
     </script>
 </body>
 </html>
