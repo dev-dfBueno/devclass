@@ -72,6 +72,7 @@
                 currentChar++;
                 setTimeout(type, typingDelay);
             } else {
+                // Após terminar a frase, espera um pouco e começa a próxima mensagem
                 setTimeout(() => {
                     currentMessage++;
                     if (currentMessage < messages.length) {
@@ -79,12 +80,14 @@
                         typedTextSpan.textContent = '';
                         type();
                     } else {
+                        // Remove o cursor ao final
                         cursorSpan.style.display = 'none';
                     }
                 }, nextMessageDelay);
             }
         }
 
+        // Inicia o processo de digitação
         type();
     </script>
 </body>
