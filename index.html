@@ -3,62 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boas-vindas</title>
+    <title>Boas-vindas - DevClass</title>
     <style>
-        body {
-            font-family: 'Courier New', monospace;
-            background-color: #1E1E1E;
-            color: #00FF00;
-            text-align: center;
+        body, html {
+            height: 100%;
             margin: 0;
+            font-family: 'Lucida Console', Monaco, monospace;
+            background-color: #0d1117;
+            color: #58a6ff;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            text-align: center;
         }
 
-        #terminal {
-            border: 2px solid #00FF00;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 600px;
+        .terminal {
+            background-color: #161b22;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .terminal-header {
+            color: #c9d1d9;
+            margin-bottom: 20px;
+        }
+
+        .terminal-header span {
+            color: #8b949e;
+        }
+
+        .welcome-message {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .command-line {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            padding: 10px 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .command-line:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+
+        .command-line::placeholder {
+            color: #8b949e;
         }
     </style>
 </head>
 <body>
-    <div id="terminal">
-        <p>Bem-vindo ao Terminal de Boas-vindas!</p>
-        <p>Digite <span style="color: #00FFFF;">help</span> para obter ajuda.</p>
-        <br>
-        <div id="output"></div>
-        <br>
-        <input type="text" id="input" placeholder="Digite algo..." onkeydown="handleKeyPress(event)">
+    <div class="terminal">
+        <div class="terminal-header">
+            <h1>DevClass</h1>
+            <span>Terminal de Boas-vindas</span>
+        </div>
+        <div class="welcome-message">
+            Olá, bem-vindo ao DevClass! Digite <span style="color: #8b949e;">'ajuda'</span> para mais informações.
+        </div>
+        <input type="text" class="command-line" placeholder="Digite seu comando..." autofocus>
     </div>
 
     <script>
-        function handleKeyPress(event) {
-            if (event.key === "Enter") {
-                processInput();
+        document.querySelector('.command-line').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                processCommand(this.value);
+                this.value = '';
             }
-        }
+        });
 
-        function processInput() {
-            var inputElement = document.getElementById("input");
-            var outputElement = document.getElementById("output");
-            var inputValue = inputElement.value;
-
-            // Limpar o campo de entrada
-            inputElement.value = "";
-
-            // Adicionar o texto digitado ao terminal
-            outputElement.innerHTML += "<p>> " + inputValue + "</p>";
-
-            // Lógica para processar o comando (pode adicionar mais lógica conforme necessário)
-            if (inputValue.toLowerCase() === "help") {
-                outputElement.innerHTML += "<p>Ajuda: Esta é uma mensagem de ajuda fictícia.</p>";
-            } else {
-                outputElement.innerHTML += "<p>Comando desconhecido. Digite 'help' para obter ajuda.</p>";
+        function processCommand(command) {
+            switch (command.toLowerCase()) {
+                case 'ajuda':
+                    alert('Ajuda: Comandos disponíveis: ajuda, sobre, contato...');
+                    break;
+                case 'sobre':
+                    alert('Sobre: DevClass é uma plataforma de aprendizado em desenvolvimento...');
+                    break;
+                // Adicione mais comandos conforme necessário
+                default:
+                    alert('Comando não reconhecido. Digite "ajuda" para uma lista de comandos.');
             }
         }
     </script>
