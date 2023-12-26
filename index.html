@@ -8,9 +8,10 @@
         body, html {
             height: 100%;
             margin: 0;
-            font-family: 'Lucida Console', Monaco, monospace;
-            background-color: #0d1117;
-            color: #58a6ff;
+            padding: 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #282c34;
+            color: #9DA5B4;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -18,82 +19,76 @@
         }
 
         .terminal {
-            background-color: #161b22;
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            padding: 30px;
-            width: 90%;
-            max-width: 800px;
-        }
-
-        .terminal-header {
-            color: #c9d1d9;
-            margin-bottom: 20px;
-        }
-
-        .terminal-header span {
-            color: #8b949e;
-        }
-
-        .welcome-message {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-
-        .command-line {
-            background-color: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            color: #c9d1d9;
-            padding: 10px 15px;
+            background-color: #21252b;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 40px;
             width: 100%;
-            box-sizing: border-box;
+            max-width: 800px;
+            margin: 30px;
         }
 
-        .command-line:focus {
-            outline: none;
-            border-color: #58a6ff;
+        .typed-text {
+            font-size: 1.2em;
+            white-space: pre;
+            overflow: hidden;
+            display: inline-block;
         }
 
-        .command-line::placeholder {
-            color: #8b949e;
+        @media (max-width: 600px) {
+            .terminal {
+                padding: 20px;
+            }
+            .typed-text {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="terminal">
-        <div class="terminal-header">
-            <h1>DevClass</h1>
-            <span>Terminal de Boas-vindas</span>
-        </div>
-        <div class="welcome-message">
-            Olá, bem-vindo ao DevClass! Digite <span style="color: #8b949e;">'ajuda'</span> para mais informações.
-        </div>
-        <input type="text" class="command-line" placeholder="Digite seu comando..." autofocus>
+        <div class="typed-text"></div>
+        <div class="cursor" style="display: inline-block; width: 10px; background-color: #9DA5B4;"></div>
     </div>
 
     <script>
-        document.querySelector('.command-line').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                processCommand(this.value);
-                this.value = '';
-            }
-        });
+        const messages = [
+            "Bem-vindo ao DevClass...",
+            "A plataforma perfeita para desenvolvedores...",
+            "Carregando módulos de aprendizado...",
+            "Preparando ambiente de desenvolvimento...",
+            "Pronto para começar!"
+        ];
+        let currentMessage = 0;
+        let currentChar = 0;
+        const typingDelay = 100;
+        const nextMessageDelay = 1000;
+        const typedTextSpan = document.querySelector(".typed-text");
+        const cursorSpan = document.querySelector(".cursor");
 
-        function processCommand(command) {
-            switch (command.toLowerCase()) {
-                case 'ajuda':
-                    alert('Ajuda: Comandos disponíveis: ajuda, sobre, contato...');
-                    break;
-                case 'sobre':
-                    alert('Sobre: DevClass é uma plataforma de aprendizado em desenvolvimento...');
-                    break;
-                // Adicione mais comandos conforme necessário
-                default:
-                    alert('Comando não reconhecido. Digite "ajuda" para uma lista de comandos.');
+        function type() {
+            if (currentChar < messages[currentMessage].length) {
+                typedTextSpan.textContent += messages[currentMessage].charAt(currentChar);
+                currentChar++;
+                setTimeout(type, typingDelay);
+            } else {
+                // Após terminar a frase, espera um pouco e começa a próxima mensagem
+                setTimeout(() => {
+                    currentMessage++;
+                    if (currentMessage < messages.length) {
+                        currentChar = 0;
+                        typedTextSpan.textContent = '';
+                        type();
+                    } else {
+                        // Remove o cursor ao final
+                        cursorSpan.style.display = 'none';
+                    }
+                }, nextMessageDelay);
             }
         }
+
+        // Inicia o processo de digitação
+        type();
     </script>
 </body>
 </html>
